@@ -41,10 +41,10 @@ if __name__ == "__main__":
         return accuracy.compute(predictions=predictions, references=references)
 
     args = TrainingArguments(
-        "imdb-blah-blah",
+        "models/imdb-blah-blah",
         per_device_train_batch_size=16,
         per_device_eval_batch_size=16,
-        gradient_accumulation_steps=2,
+        gradient_accumulation_steps=1,
         num_train_epochs=2,
         report_to="wandb",
         save_strategy="steps",
