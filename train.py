@@ -1,12 +1,15 @@
 import logging
 import sys
 import wandb
+from dotenv import load_dotenv
 from datasets import Dataset, load_metric
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
 
 PRETRAINED_MODEL_NAME_OR_PATH = "bertlet"
 
 if __name__ == "__main__":
+
+    load_dotenv()
 
     logger = logging.getLogger(__name__)
 
