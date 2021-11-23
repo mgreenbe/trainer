@@ -2,16 +2,23 @@ import logging
 import sys
 import wandb
 from dotenv import load_dotenv
+from argparse import ArgumentParser
 from datasets import Dataset, load_metric
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
 
 PRETRAINED_MODEL_NAME_OR_PATH = "bertlet"
 
 if __name__ == "__main__":
-
     load_dotenv()
-
     logger = logging.getLogger(__name__)
+
+    parser = ArgumentParser()
+
+    parser.add_argument("--save_strategy", type=str, default="no")
+    parser.add_argument("--save_steps", type=int, default=500)
+    parser.add_argument("--report_to", type=str, default="none")
+
+    args, _ = parser.parse_known_args()
 
     logging.basicConfig(
         level=logging.getLevelName("INFO"),
@@ -46,9 +53,9 @@ if __name__ == "__main__":
         per_device_eval_batch_size=16,
         gradient_accumulation_steps=1,
         num_train_epochs=2,
-        report_to="wandb",
-        save_strategy="steps",
-        save_steps=3,
+        report_to=args.report_to,
+        save_strategy=args.save_strategy,
+        save_steps=args.save_steps,
         evaluation_strategy="steps",
         eval_steps=3
     )
